@@ -25,7 +25,7 @@ const accounts = [
 
 async function getUserToken({ email, password }: { email: string, password: string }) {
   // login to firebase
-  const apiKey = "AIzaSyBmZo-DVx-QP1P9uitYTQhtmLXIv1xUcDE";
+  const apiKey = ""; // TODO: set up firebase browser API key again (this key is public and exposed on frontends, so no problem on hardcoding it)
   const res = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`, {
     method: 'POST',
     headers: {
