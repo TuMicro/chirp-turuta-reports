@@ -81,7 +81,7 @@ Now you can start deploying anything of the below:
 
 ```
 # deploy all functions (remember to set up the .env accordingly before deploying to production)
-firebase deploy --only functions && time /t
+firebase deploy --only functions:turuta_app_reports_listener && time /t
 ```
 
 # Testing-environment Deployment to Cloud Functions

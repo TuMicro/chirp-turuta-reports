@@ -2,12 +2,25 @@ import { FS_reports } from "../constants/firestore";
 import { fdb } from "../firestore-init";
 
 // from https://gitlab.com/turuta/turutar3-billing/-/blob/58e4d73afb5af55ba1d95631847ea2388b31644c/tumicro/src/main/java/pe/tumicro/android/vo/firebase/report/BaseReport.java#L21
-export interface BaseReport {
+export interface Report {
+  // base fields:
+  timestamp: number; // timestamp in seconds
   lat?: number | null; // double
   lng?: number | null; // double
-  timestamp: number | null; // timestamp in seconds
-  details: string | null;
-  totPictures: number | null; // integer
+  details?: string | null;
+  totPictures?: number | null; // integer
+
+  // other fields:
+  route_id?: string | null; // string
+  transportType?: string | null; // string
+  routeName?: string | null; // string
+}
+
+export interface ReportWithIds extends Report {
+  id: string,
+  userId: string,
+  reportType: string,
+  [key: string]: unknown,
 }
 
 // get all document references under the reports collection (includes empty docs
@@ -32,7 +45,7 @@ export async function getReports(reportType: string, userId: string,
     id: x.id,
     userId,
     reportType,
-    ...(x.data() as BaseReport),
+    ...(x.data() as Report),
   }));
 }
 
