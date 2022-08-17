@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { getAllReportsInRange, getReportDocumentIds, getReports, getReportSubcollectionIds } from "./turuta-reports";
 // import index from "./";
 
-describe.only("TuRuta Reports", () => {
+describe("TuRuta Reports", () => {
   it("should be able to query reports", async () => {
     const start = 1574597671;
     const end = 1574597671;
