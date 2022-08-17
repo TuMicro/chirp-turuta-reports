@@ -42,7 +42,7 @@ export async function getTwitterOauth2Url() {
 
 export async function loginWithTwitterOauth2(code: string, codeVerifier: string) {
   const client = getPartialClientForAuthLinks();
-  const {accessToken, refreshToken, expiresIn, scope } = await client.loginWithOAuth2({
+  const { accessToken, refreshToken, expiresIn, scope } = await client.loginWithOAuth2({
     code,
     codeVerifier,
     redirectUri: CALLBACK_URL
@@ -53,7 +53,7 @@ export async function loginWithTwitterOauth2(code: string, codeVerifier: string)
   // present if 'offline.access' has been given as scope)
   console.log('logged in!!, access token valid during ', expiresIn, 'seconds');
 
-  const tokens : TwitterAccessTokens = {
+  const tokens: TwitterAccessTokens = {
     accessToken,
     refreshToken: refreshToken ?? "",
     expiresIn,
@@ -63,7 +63,7 @@ export async function loginWithTwitterOauth2(code: string, codeVerifier: string)
 
   // storing the tokens in firestore
   await setTwitterAccessTokens(TWITTER_USER_ID_USED_INTERNALLY, tokens);
-  
+
   return tokens;
 }
 
@@ -77,8 +77,8 @@ export async function getTwitterValidAccessToken() {
   if ((x.expiresIn - 10) * 1000 < Date.now() - x.lastTimeUpdated) {
     // refresh the tokens
     const client = getPartialClientForAuthLinks();
-    const {accessToken, refreshToken, expiresIn, scope } = await client.refreshOAuth2Token(x.refreshToken);
-    const tokens : TwitterAccessTokens = {
+    const { accessToken, refreshToken, expiresIn, scope } = await client.refreshOAuth2Token(x.refreshToken);
+    const tokens: TwitterAccessTokens = {
       accessToken,
       refreshToken: refreshToken ?? "",
       expiresIn,
@@ -100,6 +100,10 @@ export async function tweetText(text: string, accessToken: string) {
   const r = await readWriteClient.v2.tweet({
     text: text,
   });
-  console.log(JSON.stringify(r));
+  console.log(JSON.stringify({
+    action: 'tweet',
+    ...r,
+  }));
+  return r;
 }
 

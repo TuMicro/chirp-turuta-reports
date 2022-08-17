@@ -68,7 +68,7 @@ npm run-script serve
 
 # Production Deployment to Cloud Functions
 
-First install firebase CLI utility in your machine and login. Download the `.env.prod` file from [here](https://drive.google.com/drive/) and place it in the functions folder. (make sure IS_TESTING=false)
+First install firebase CLI utility in your machine and login. Download the `.env.prod` file from [here](https://drive.google.com/drive/folders/1_bSPY7ji4JiSTipQyy0sVQyc75L0Pyc3) and place it in the functions folder. (make sure IS_TESTING=false)
 
 Then IN THE ROOT FOLDER run:
 

@@ -1,4 +1,5 @@
 import { ReportWithIds } from "../firestore-data-access/turuta-reports";
+import { getTwitterValidAccessToken, tweetText } from "../util/twitter";
 
 // from: https://docs.google.com/spreadsheets/d/1q1kE9KoZZ3NWSBLzdcR4ISKufB8mxW-c5Ve4p290OJM/edit#gid=541837242&fvid=741961423
 const ALLOWED_REPORT_TYPES = [
@@ -9,6 +10,8 @@ const ALLOWED_REPORT_TYPES = [
   'LongWaiting',
   'Stop',
   'Traffic',
+  'Bullyng',
+  'StreetClosure',
 ];
 
 
@@ -25,4 +28,12 @@ export async function tweetReport(report: ReportWithIds) {
     return;
   }
   console.log(`tweetReport: ${JSON.stringify(report)}`);
+
+  // getting the text to tweet
+  const publicTransporRoute = report.transportType ?? report.route_id ?? report.routeName ?? "";
+  // TODO: maybe truncate to 140 chars?
+  const text = `${report.details ?? ""} ${publicTransporRoute.length > 0 ? ` - reportado en la ruta 🚌 ${publicTransporRoute}` : ""}`;
+
+  const at = await getTwitterValidAccessToken();
+  await tweetText(text, at.accessToken);
 }
