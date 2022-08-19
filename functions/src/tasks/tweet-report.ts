@@ -31,8 +31,10 @@ export async function tweetReport(report: ReportWithIds) {
 
   // getting the text to tweet
   const publicTransporRoute = report.transportType ?? report.route_id ?? report.routeName ?? "";
-  // TODO: maybe truncate to 140 chars?
-  const text = `${report.details ?? ""} ${publicTransporRoute.length > 0 ? ` - reportado en la ruta 🚌 ${publicTransporRoute}` : ""}`;
+  const text = `${report.details ?? ""} ${publicTransporRoute.length > 0 ? ` - reportado en la ruta 🚌 ${publicTransporRoute}` : ""}`
+    // truncate chars to 139
+    .substring(0, 139);
+
 
   const at = await getTwitterValidAccessToken();
   await tweetText(text, at.accessToken);
