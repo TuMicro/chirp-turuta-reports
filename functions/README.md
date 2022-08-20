@@ -84,25 +84,6 @@ Now you can start deploying anything of the below:
 firebase deploy --only functions:turuta_app_reports_listener && time /t
 ```
 
-# Testing-environment Deployment to Cloud Functions
-
-First install firebase CLI utility in your machine and login. Download the `.env.test` file from [here](https://drive.google.com/drive/u/1/folders/1rNEj3qYcg14aCAY8auvC99GyKA3R8RPO) and place it in the functions folder.
-
-Then IN THE ROOT FOLDER run:
-
-```
-firebase use test
-# more info: https://firebase.google.com/docs/functions/config-env#env-variables
-```
-
-Now you can start deploying anything of the below:
-
-```
-# testing functions (usually for frontend testing)
-firebase deploy --only functions:testing && time /t
-```
-
-
 # Utils
 En Google Cloud SDK Shell
 ```
