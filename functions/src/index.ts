@@ -5,7 +5,7 @@ import * as functions from 'firebase-functions';
 import { Report, ReportWithIds } from './firestore-data-access/turuta-reports';
 import { tweetReport } from './tasks/tweet-report';
 
-// Listen for changes in all documents in the 'users' collection and all subcollections
+// Listen for new documents on the reports collection
 export const turuta_app_reports_listener = functions.firestore
     .document('reports/{reportType}/{userId}/{reportId}')
     .onCreate(async (snap, context) => {
