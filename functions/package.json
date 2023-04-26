@@ -6,7 +6,8 @@
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "watch": "mocha -w",
-    "testSprintRally02": "mocha -g 'rally_02_sprint'",
+    "testTwitterAccess": "mocha -g 'TwitterAccess'",
+    "testTweet": "mocha -g 'Tweet'",
     "test": "mocha",
     "start": "npm run watch",
     "deploy": "firebase deploy --only functions",
@@ -37,7 +38,7 @@
     "node-fetch": "^2.6.6",
     "request-promise": "^4.2.6",
     "tslint": "^6.1.3",
-    "twitter-api-v2": "^1.12.5"
+    "twitter-api-v2": "^1.14.2"
   },
   "devDependencies": {
     "@types/chai": "^4.3.0",

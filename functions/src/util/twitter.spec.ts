@@ -1,6 +1,7 @@
-import { getTwitterOauth2Url, getTwitterValidAccessToken, loginWithTwitterOauth2, tweetText } from "./twitter";
+import { ApiResponseError } from "twitter-api-v2";
+import { getTwitterOauth2Url, getTwitterValidAccessToken, loginWithTwitterOauth2 } from "./twitter";
 
-describe("Twitter API", () => {
+describe("TwitterAccess API", () => {
   it("should generate an oauth2.0 link", async () => {
     const r = await getTwitterOauth2Url();
     console.log(r);
@@ -10,13 +11,23 @@ describe("Twitter API", () => {
   if (enableFirstLogin) {
     // don't wait too much after calling getTwitterOauth2Url to call this:
     it("should login given oauth2.0 tokens", async () => {
-      const r = await loginWithTwitterOauth2(
-        // code: get this from the redirect url query param after the user authorizes the app
-        '',
-        // codeVerifier: get this from the getTwitterOauth2Url method:
-        ''
-      );
-      console.log(r);
+      try {
+        const r = await loginWithTwitterOauth2(
+          // code: get this from the redirect url query param after the user authorizes the app
+          '',
+          // codeVerifier: get this from the getTwitterOauth2Url method:
+          ''
+        );
+        console.log(r);
+
+      } catch (e) {
+        console.log(e);
+        if (e instanceof ApiResponseError) {
+          console.log(JSON.stringify(e.data, null, 2));
+          console.log("isAuthError", e.isAuthError);
+        }
+        throw e;
+      }
     }).timeout(2 * 60 * 1000);
   }
 
@@ -24,13 +35,4 @@ describe("Twitter API", () => {
     const r = await getTwitterValidAccessToken();
     console.log(r);
   }).timeout(2 * 60 * 1000);
-
-  const enableTweetTest = false;
-  if (enableTweetTest) {
-    it.only("should tweet", async () => {
-      const at = await getTwitterValidAccessToken();
-      const r = await tweetText("sup", at.accessToken);
-      console.log(r);
-    }).timeout(2 * 60 * 1000);
-  }
 });
